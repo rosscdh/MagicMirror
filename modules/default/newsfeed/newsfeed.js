@@ -344,6 +344,11 @@ Module.register("newsfeed",{
 			this.resetDescrOrFullArticleAndTimer();
 			Log.info(this.name + " - showing only article titles again");
 			this.updateDom(100);
+		} else if(notification == "FRESH_LOAD_FEEDS"){
+
+			this.config.feeds = payload.feeds || [];
+			this.start();
+
 		} else {
 			Log.info(this.name + " - unknown notification, ignoring: " + notification);
 		}

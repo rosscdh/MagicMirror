@@ -10,6 +10,7 @@ Module.register("compliments", {
 
 	// Module config defaults.
 	defaults: {
+		compliment: null,
 		compliments: {
 			anytime: [
 				"Hey there sexy!"
@@ -148,7 +149,7 @@ Module.register("compliments", {
 
 	// Override dom generator.
 	getDom: function() {
-		var complimentText = this.randomCompliment();
+		var complimentText = this.config.compliment || this.randomCompliment();
 
 		var compliment = document.createTextNode(complimentText);
 		var wrapper = document.createElement("div");
@@ -189,6 +190,11 @@ Module.register("compliments", {
 	notificationReceived: function(notification, payload, sender) {
 		if (notification == "CURRENTWEATHER_DATA") {
 			this.setCurrentWeatherType(payload.data);
+		}
+		if (notification == "UPDATE_COMPLIMENT") {
+			console.log(payload);
+			this.config.compliment = payload.compliment;
+			this.updateDom();
 		}
 	},
 
